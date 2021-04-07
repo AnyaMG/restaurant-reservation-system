@@ -14,9 +14,6 @@ function NewReservation() {
   const [timeOfReservation, setTimeOfReservation] = useState("");
   const [partySize, setPartySize] = useState(1); // i tried to make this mandate that party size cannot be < 1 ... it did not work
 
-
-
-
   // click handler for Submit button
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,11 +71,11 @@ function NewReservation() {
     // breadcrumb nav links atop the page with routing to dashboard
     <div>
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
             <Link to="/">Home</Link>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">
+          <li className="breadcrumb-item active" aria-current="page">
             Create Reservation
           </li>
         </ol>
@@ -87,46 +84,46 @@ function NewReservation() {
       <h2>Create Reservation</h2>
       {/* a form with a field for each key in reservationObj; each field is contained within an input with its own label */}
       <form>
-        <div class="mb-3">
-          <label htmlFor="exampleFormControlTextarea1" class="form-label">
+        <div className="mb-3">
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">
             First name:
           </label>
           <input
             name="first_name"
-            class="form-control"
+            className="form-control"
             id="exampleFormControlTextarea1"
             rows="3"
-            placeholder="Input first name (mandatory)"
+            placeholder="Mandatory first name (cannot contain numbers or special characters)"
             onChange={handleFirstName}
           ></input>
-          <label htmlFor="exampleFormControlTextarea1" class="form-label">
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">
             Last name:
           </label>
           <input
             name="last_name"
-            class="form-control"
+            className="form-control"
             id="exampleFormControlTextarea1"
             rows="3"
-            placeholder="Input last name (mandatory)"
+            placeholder="Mandatory last name (cannot contain numbers or special characters)"
             onChange={handleLastName}
           ></input>
-          <label htmlFor="exampleFormControlTextarea1" class="form-label">
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">
             Mobile number:
           </label>
           <input
             name="mobile_number"
-            class="form-control"
+            className="form-control"
             id="exampleFormControlTextarea1"
             rows="3"
             placeholder="###-###-####"
             onChange={handleMobileNumber}
           ></input>
-          <label htmlFor="exampleFormControlTextarea1" class="form-label">
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">
             Date:
           </label>
           <input
             name="reservation_date"
-            class="form-control"
+            className="form-control"
             id="exampleFormControlTextarea1"
             rows="3"
             type="date"
@@ -134,12 +131,12 @@ function NewReservation() {
             pattern="\d{4}-\d{2}-\d{2}"
             onChange={handleDateOfReservation}
           ></input>
-          <label htmlFor="exampleFormControlTextarea1" class="form-label">
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">
             Time:
           </label>
           <input
             name="reservation_time"
-            class="form-control"
+            className="form-control"
             id="exampleFormControlTextarea1"
             rows="3"
             type="time"
@@ -147,12 +144,12 @@ function NewReservation() {
             pattern="[0-9]{2}:[0-9]{2}"
             onChange={handleTimeOfReservation}
           ></input>
-          <label htmlFor="exampleFormControlTextarea1" class="form-label">
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">
             Party size:
           </label>
           <input
             name="people"
-            class="form-control"
+            className="form-control"
             id="exampleFormControlTextarea1"
             rows="3"
             placeholder="# (default to 1 if left blank)"
@@ -161,54 +158,82 @@ function NewReservation() {
         </div>
         {/* Cancel and Submit buttons with appropriate routing */}
         {/* first cancel button syntax */}
-        <Link to="/" class="btn btn-outline-danger">
+        <Link to="/" className="btn btn-outline-danger">
           Cancel • Test Button Syntax 1 • Go to dashboard
         </Link>
         {``} {``} {``} {``}
         {/* second cancel button syntax; which of the two is appropriate here? */}
-        <a class="btn btn-outline-danger" href="/" role="button">
+        <a className="btn btn-outline-danger" href="/" role="button">
           Cancel • Test Button Syntax 2 • Go to dashboard
         </a>
         {``} {``} {``} {``}
-      
-{/* below is experimental dialog prompt to confirm cancel */}
-
+        {/* below is experimental dialog prompt to confirm cancel */}
         {/* <!-- Button trigger modal --> */}
-<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal">
-  Cancel • Pop-up Test Button 1 • Confirmation required
-</button>
-
-{/* <!-- Modal --> */}
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Cancel Reservation</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button
+          type="button"
+          className="btn btn-outline-danger"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          Cancel • Pop-up Test Button 1 • Confirmation required
         </button>
-      </div>
-      <div class="modal-body">
-        Cancel reservation and return to Dashboard? This cannot be undone.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-        <a role="button" href="/"type="button" class="btn btn-outline-success">Cancel reservation</a>
-      </div>
-    </div>
-  </div>
-</div>
-{``} {``} {``} {``}
-  {/* this submit button has two types, how to make this clearer? does it matter? */}
-  <button
+        {/* <!-- Modal --> */}
+        <div
+          className="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
+                  Cancel Reservation
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                Cancel reservation and return to Dashboard? This cannot be
+                undone.
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <a
+                  role="button"
+                  href="/"
+                  type="button"
+                  className="btn btn-outline-success"
+                >
+                  Cancel reservation
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {``} {``} {``} {``}
+        {/* this submit button has two types, how to make this clearer? does it matter? */}
+        <button
           type="button"
           onClick={handleSubmit}
-          class="btn btn-outline-success"
+          className="btn btn-outline-success"
         >
           Submit
         </button>
         {``} {``} {``} {``}
-
       </form>
     </div>
   );
