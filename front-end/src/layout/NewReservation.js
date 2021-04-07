@@ -1,3 +1,4 @@
+  
 import React, { useState } from "react";
 import { createReservation } from "../utils/api";
 import { Link, useHistory } from "react-router-dom";
@@ -12,7 +13,7 @@ function NewReservation() {
   const [mobileNumber, setMobileNumber] = useState("");
   const [dateOfReservation, setDateOfReservation] = useState("");
   const [timeOfReservation, setTimeOfReservation] = useState("");
-  const [partySize, setPartySize] = useState(1); // i tried to make this mandate that party size cannot be < 1 ... it did not work
+  const [partySize, setPartySize] = useState(1); // if left blank, it will default to 1
 
   // click handler for Submit button
   const handleSubmit = async (e) => {
@@ -37,7 +38,7 @@ function NewReservation() {
     };
 
     const newReservation = await createReservation(reservationObj);
-    newReservation.dashboard = [];
+    newReservation.reservation = [];
 
     history.push(`/dashboard/${reservationObj}`);
   };
@@ -94,7 +95,7 @@ function NewReservation() {
             id="exampleFormControlTextarea1"
             rows="3"
             placeholder="Mandatory first name (cannot contain numbers or special characters)"
-            onChange={handleFirstName}
+            onChange={handleFirstName} required
           ></input>
           <label htmlFor="exampleFormControlTextarea1" className="form-label">
             Last name:
@@ -105,7 +106,7 @@ function NewReservation() {
             id="exampleFormControlTextarea1"
             rows="3"
             placeholder="Mandatory last name (cannot contain numbers or special characters)"
-            onChange={handleLastName}
+            onChange={handleLastName} required
           ></input>
           <label htmlFor="exampleFormControlTextarea1" className="form-label">
             Mobile number:
@@ -116,7 +117,7 @@ function NewReservation() {
             id="exampleFormControlTextarea1"
             rows="3"
             placeholder="###-###-####"
-            onChange={handleMobileNumber}
+            onChange={handleMobileNumber} required
           ></input>
           <label htmlFor="exampleFormControlTextarea1" className="form-label">
             Date:
@@ -129,7 +130,7 @@ function NewReservation() {
             type="date"
             placeholder="YYYY-MM-DD"
             pattern="\d{4}-\d{2}-\d{2}"
-            onChange={handleDateOfReservation}
+            onChange={handleDateOfReservation} required
           ></input>
           <label htmlFor="exampleFormControlTextarea1" className="form-label">
             Time:
@@ -142,7 +143,7 @@ function NewReservation() {
             type="time"
             placeholder="HH:MM"
             pattern="[0-9]{2}:[0-9]{2}"
-            onChange={handleTimeOfReservation}
+            onChange={handleTimeOfReservation} required
           ></input>
           <label htmlFor="exampleFormControlTextarea1" className="form-label">
             Party size:
@@ -153,20 +154,16 @@ function NewReservation() {
             id="exampleFormControlTextarea1"
             rows="3"
             placeholder="# (default to 1 if left blank)"
-            onChange={handlePartySize}
+            onChange={handlePartySize} required
           ></input>
         </div>
         {/* Cancel and Submit buttons with appropriate routing */}
         {/* first cancel button syntax */}
         <Link to="/" className="btn btn-outline-danger">
-          Cancel • Test Button Syntax 1 • Go to dashboard
+          Cancel • Test Button • Go to dashboard
         </Link>
         {``} {``} {``} {``}
-        {/* second cancel button syntax; which of the two is appropriate here? */}
-        <a className="btn btn-outline-danger" href="/" role="button">
-          Cancel • Test Button Syntax 2 • Go to dashboard
-        </a>
-        {``} {``} {``} {``}
+        
         {/* below is experimental dialog prompt to confirm cancel */}
         {/* <!-- Button trigger modal --> */}
         <button
@@ -175,13 +172,13 @@ function NewReservation() {
           data-toggle="modal"
           data-target="#exampleModal"
         >
-          Cancel • Pop-up Test Button 1 • Confirmation required
+          Cancel • Pop-up Test Button • Confirmation required
         </button>
         {/* <!-- Modal --> */}
         <div
           className="modal fade"
           id="exampleModal"
-          tabindex="-1"
+          tabIndex="-1"
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
         >

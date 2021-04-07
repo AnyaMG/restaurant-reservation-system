@@ -68,13 +68,19 @@ export async function listReservations(params, signal) {
     .then(formatReservationTime);
 }
 ///everything below this line is helper functions i added, this is for importing newReservation file
+/**
+* Retrieves all existing reservations.
+* @returns {Promise<[reservation]>}
+*  a promise that resolves to a possibly empty array of decks saved in the database.
+*/
+
 export async function createReservation(reservation, signal) {
   const url = `${API_BASE_URL}/reservations`;
   const options = {
     method: "POST",
     headers,
-    // body: JSON.stringify(stripReservations(reservation)),
-    signal,
+    // body: JSON.stringify(create(reservation)),
+    // signal,
   };
   return await fetchJson(url, options);
 }
