@@ -6,14 +6,25 @@ import { Link, useHistory } from "react-router-dom";
 // create NewReservation component
 function NewReservation() {
   const history = useHistory();
-  //   const [reservation, setReservation] = useState("");
   // create a state for each field to be submitted
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [dateOfReservation, setDateOfReservation] = useState("");
   const [timeOfReservation, setTimeOfReservation] = useState("");
-  const [partySize, setPartySize] = useState(1); // if left blank, it will default to 1
+  const [people, setPeople] = useState(1); // if left blank, it will default to 1
+
+
+  // ALTERNATIVELY THIS SHOULD BE CLEANER ... REVISIT LATER
+
+  // const [reservation, setReservation] = useState({
+  //   first_name: '',
+  //   last_name: '',
+  //   mobile_number: '',
+  //   reservation_date: '',
+  //   reservation_time: '',
+  //   people: 1
+  // })
 
   // click handler for Submit button
   const handleSubmit = async (e) => {
@@ -25,7 +36,7 @@ function NewReservation() {
     console.log("Mobile number:", mobileNumber);
     console.log("Reservation date:", dateOfReservation);
     console.log("Reservation time:", timeOfReservation);
-    console.log("Party size:", partySize);
+    console.log("Party size:", people);
 
     // a single new reservation should be pushed to /dashboard upon Submit
     const reservationObj = {
@@ -34,11 +45,11 @@ function NewReservation() {
       mobileNumber: mobileNumber,
       dateOfReservation: dateOfReservation,
       timeOfReservation: timeOfReservation,
-      partySize: partySize, // must be at least 1
+      people: people, // must be at least 1
     };
 
     const newReservation = await createReservation(reservationObj);
-    newReservation.reservation = [];
+    newReservation.reservationObj = [];
 
     history.push(`/dashboard/${reservationObj}`);
   };
@@ -64,8 +75,8 @@ function NewReservation() {
   const handleTimeOfReservation = (e) => {
     setTimeOfReservation(e.target.value);
   };
-  const handlePartySize = (e) => {
-    setPartySize(e.target.value);
+  const handlePeople = (e) => {
+    setPeople(e.target.value);
   };
 
   return (
@@ -154,7 +165,7 @@ function NewReservation() {
             id="exampleFormControlTextarea1"
             rows="3"
             placeholder="# (default to 1 if left blank)"
-            onChange={handlePartySize} required
+            onChange={handlePeople} required
           ></input>
         </div>
         {/* Cancel and Submit buttons with appropriate routing */}
@@ -224,7 +235,7 @@ function NewReservation() {
         {``} {``} {``} {``}
         {/* this submit button has two types, how to make this clearer? does it matter? */}
         <button
-          type="button"
+          type="submit"
           onClick={handleSubmit}
           className="btn btn-outline-success"
         >

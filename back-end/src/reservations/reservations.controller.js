@@ -9,7 +9,7 @@ async function list(req, res) {
   reservationsService
   .list()
   .then((data) =>
-  res.json({ data: [] }))
+  res.json({ data: data }))
 }
 
 async function create(req, res) {
