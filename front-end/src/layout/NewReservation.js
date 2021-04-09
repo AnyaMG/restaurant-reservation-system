@@ -1,7 +1,8 @@
-  
 import React, { useState } from "react";
 import { createReservation } from "../utils/api";
+import { formatAsDate } from '../utils/date-time';
 import { Link, useHistory } from "react-router-dom";
+
 
 // create NewReservation component
 function NewReservation() {
@@ -36,22 +37,22 @@ function NewReservation() {
     console.log("Mobile number:", mobileNumber);
     console.log("Reservation date:", dateOfReservation);
     console.log("Reservation time:", timeOfReservation);
-    console.log("Party size:", people);
+    console.log("People:", people);
 
     // a single new reservation should be pushed to /dashboard upon Submit
     const reservationObj = {
-      firstName: firstName,
-      lastName: lastName,
-      mobileNumber: mobileNumber,
-      dateOfReservation: dateOfReservation,
-      timeOfReservation: timeOfReservation,
+      first_name: firstName,
+      last_name: lastName,
+      mobile_number: mobileNumber,
+      reservation_date: dateOfReservation,
+      reservation_time: timeOfReservation,
       people: people, // must be at least 1
     };
 
     const newReservation = await createReservation(reservationObj);
-    newReservation.reservationObj = [];
+    const { reservation_date } = newReservation;
 
-    history.push(`/dashboard/${reservationObj}`);
+    history.push(`/dashboard?date=${formatAsDate(reservation_date)}`);
   };
 
   //   const handleNewReservation = (e) => {
@@ -79,6 +80,10 @@ function NewReservation() {
     setPeople(e.target.value);
   };
 
+  const goBack = () => {
+    history.goBack();
+  }
+
   return (
     // breadcrumb nav links atop the page with routing to dashboard
     <div>
@@ -95,9 +100,9 @@ function NewReservation() {
 
       <h2>Create Reservation</h2>
       {/* a form with a field for each key in reservationObj; each field is contained within an input with its own label */}
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="exampleFormControlTextarea1" className="form-label">
+          <label htmlFor="first_name" className="form-label">
             First name:
           </label>
           <input
@@ -108,7 +113,7 @@ function NewReservation() {
             placeholder="Mandatory first name (cannot contain numbers or special characters)"
             onChange={handleFirstName} required
           ></input>
-          <label htmlFor="exampleFormControlTextarea1" className="form-label">
+          <label htmlFor="last_name" className="form-label">
             Last name:
           </label>
           <input
@@ -119,7 +124,7 @@ function NewReservation() {
             placeholder="Mandatory last name (cannot contain numbers or special characters)"
             onChange={handleLastName} required
           ></input>
-          <label htmlFor="exampleFormControlTextarea1" className="form-label">
+          <label htmlFor="mobile_number" className="form-label">
             Mobile number:
           </label>
           <input
@@ -127,10 +132,12 @@ function NewReservation() {
             className="form-control"
             id="exampleFormControlTextarea1"
             rows="3"
+            type="tel"
             placeholder="###-###-####"
+            // pattern="/\d{3}-\d{3}-\d{4}/"
             onChange={handleMobileNumber} required
           ></input>
-          <label htmlFor="exampleFormControlTextarea1" className="form-label">
+          <label htmlFor="reservation_date" className="form-label">
             Date:
           </label>
           <input
@@ -143,7 +150,7 @@ function NewReservation() {
             pattern="\d{4}-\d{2}-\d{2}"
             onChange={handleDateOfReservation} required
           ></input>
-          <label htmlFor="exampleFormControlTextarea1" className="form-label">
+          <label htmlFor="reservation_time" className="form-label">
             Time:
           </label>
           <input
@@ -156,8 +163,8 @@ function NewReservation() {
             pattern="[0-9]{2}:[0-9]{2}"
             onChange={handleTimeOfReservation} required
           ></input>
-          <label htmlFor="exampleFormControlTextarea1" className="form-label">
-            Party size:
+          <label htmlFor="people" className="form-label">
+            People:
           </label>
           <input
             name="people"
@@ -170,9 +177,12 @@ function NewReservation() {
         </div>
         {/* Cancel and Submit buttons with appropriate routing */}
         {/* first cancel button syntax */}
-        <Link to="/" className="btn btn-outline-danger">
+        <button onClick={goBack} className="btn btn-outline-danger">
+          Cancel • Test Button • Go back
+        </button>
+        {/* <Link to="/" className="btn btn-outline-danger">
           Cancel • Test Button • Go to dashboard
-        </Link>
+        </Link> */}
         {``} {``} {``} {``}
         
         {/* below is experimental dialog prompt to confirm cancel */}
@@ -236,7 +246,7 @@ function NewReservation() {
         {/* this submit button has two types, how to make this clearer? does it matter? */}
         <button
           type="submit"
-          onClick={handleSubmit}
+          // onClick={handleSubmit}
           className="btn btn-outline-success"
         >
           Submit
