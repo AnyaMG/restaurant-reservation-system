@@ -1,5 +1,5 @@
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
-const reservationsService = require("./reservations.service");
+const tablesService = require("./tables.service");
 const express = require("express");
 const app = express();
 
@@ -9,34 +9,37 @@ const app = express();
 
 async function list(req, res) {
   const { date } = req.query;
-  reservationsService
+  tablesService
   .list(date)
   .then((data) =>
   res.json({ data: data }))
 }
 
 
-async function create(req, res) {
+async function update(req, res) {
   console.log(req.body)
-  reservationsService
+  update
   .create(req.body.data)
   .then((data) =>
     res.status(201).json({ data: data[0] })
   );
-  // async function nameValidator(req, res, next) {
-  //   if (!res.first_name && !res.first_name.length) {
-  //     return next();
-  //   }
-  // next({
-  //   status: 400,
-  //   message: "Must include first name!"
-  // })
-  // }
+  async function nameValidator(req, res, next) {
+    if (!table_name || table_name.length < 1) {
+      return next();
+
+      
+
+    }
+  next({
+    status: 400,
+    message: "Table name must include at least 2 letters!"
+  })
+  }
 }
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
  
   // create: [asyncErrorBoundary(validateNewReservation), asyncErrorBoundary(dateValidator), asyncErrorBoundary(timelineValidator), asyncErrorBoundary(create)],
-  create: [(asyncErrorBoundary(create))],
+  create: [(asyncErrorBoundary(create)), asyncErrorBoundary(nameValidator)],
 };

@@ -16,28 +16,10 @@ function NewReservation() {
   const [people, setPeople] = useState(1); // if left blank, it will default to 1
 
 
-  // ALTERNATIVELY THIS SHOULD BE CLEANER ... REVISIT LATER
-
-  // const [reservation, setReservation] = useState({
-  //   first_name: '',
-  //   last_name: '',
-  //   mobile_number: '',
-  //   reservation_date: '',
-  //   reservation_time: '',
-  //   people: 1
-  // })
-
   // click handler for Submit button
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // CONSOLE LOG BLOCK TO VERIFY SUBMIT IS WORKING
-    console.log("Wow such submission");
-    console.log("First name:", firstName);
-    console.log("Last name:", lastName);
-    console.log("Mobile number:", mobileNumber);
-    console.log("Reservation date:", dateOfReservation);
-    console.log("Reservation time:", timeOfReservation);
-    console.log("People:", people);
+   
 
     // a single new reservation should be pushed to /dashboard upon Submit
     const reservationObj = {
@@ -54,10 +36,6 @@ function NewReservation() {
 
     history.push(`/dashboard?date=${formatAsDate(reservation_date)}`);
   };
-
-  //   const handleNewReservation = (e) => {
-  //     setReservation(e.target.value);
-  //   };
 
   // this block addresses Submit click functionality for each altered individual input
 
@@ -178,7 +156,7 @@ function NewReservation() {
         {/* Cancel and Submit buttons with appropriate routing */}
         {/* first cancel button syntax */}
         <button onClick={goBack} className="btn btn-outline-danger">
-          Cancel • Test Button • Go back
+          Cancel
         </button>
         {/* <Link to="/" className="btn btn-outline-danger">
           Cancel • Test Button • Go to dashboard
@@ -187,16 +165,16 @@ function NewReservation() {
         
         {/* below is experimental dialog prompt to confirm cancel */}
         {/* <!-- Button trigger modal --> */}
-        <button
+        {/* <button
           type="button"
           className="btn btn-outline-danger"
           data-toggle="modal"
           data-target="#exampleModal"
         >
           Cancel • Pop-up Test Button • Confirmation required
-        </button>
+        </button> */}
         {/* <!-- Modal --> */}
-        <div
+        {/* <div
           className="modal fade"
           id="exampleModal"
           tabIndex="-1"
@@ -241,7 +219,7 @@ function NewReservation() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {``} {``} {``} {``}
         {/* this submit button has two types, how to make this clearer? does it matter? */}
         <button
