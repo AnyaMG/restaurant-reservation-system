@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { createReservation } from "../utils/api";
-import { formatAsDate } from '../utils/date-time';
+import { formatAsDate, today } from "../utils/date-time";
 import { Link, useHistory } from "react-router-dom";
-
+import ReservationError from "./ReservationError"
 
 // create NewReservation component
 function NewReservation() {
@@ -13,14 +13,30 @@ function NewReservation() {
   const [mobileNumber, setMobileNumber] = useState("");
   const [dateOfReservation, setDateOfReservation] = useState("");
   const [timeOfReservation, setTimeOfReservation] = useState("");
-  const [people, setPeople] = useState(1); // if left blank, it will default to 1
-
+  const [people, setPeople] = useState(1); 
+  const [error, setError] = useState([])
 
   // click handler for Submit button
   const handleSubmit = async (e) => {
-    e.preventDefault();
-   
 
+    e.preventDefault();
+if (dateOfReservation < today()) {
+  setError([...error, "Past dates not valid!"])
+  return;
+}
+
+let replacedTime = timeOfReservation.replace(":", "");
+if (replacedTime <1030 || replacedTime > 2130) {
+  setError([...error, "Outside operating hours!"])
+  return;
+}
+
+let newDate = new Date(dateOfReservation)
+let dayOfWeek = newDate.getDay()
+if (dayOfWeek === 1){
+  setError([...error, "Restaurant is closed on Tuesdays!"])
+  return;
+}
     // a single new reservation should be pushed to /dashboard upon Submit
     const reservationObj = {
       first_name: firstName,
@@ -60,11 +76,15 @@ function NewReservation() {
 
   const goBack = () => {
     history.goBack();
-  }
+  };
 
   return (
     // breadcrumb nav links atop the page with routing to dashboard
     <div>
+{error.length ? error.map((err)=>{
+        return <ReservationError error={error}/> 
+      }) : ""}
+
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
@@ -89,7 +109,8 @@ function NewReservation() {
             id="exampleFormControlTextarea1"
             rows="3"
             placeholder="Mandatory first name (cannot contain numbers or special characters)"
-            onChange={handleFirstName} required
+            onChange={handleFirstName}
+            required
           ></input>
           <label htmlFor="last_name" className="form-label">
             Last name:
@@ -100,7 +121,8 @@ function NewReservation() {
             id="exampleFormControlTextarea1"
             rows="3"
             placeholder="Mandatory last name (cannot contain numbers or special characters)"
-            onChange={handleLastName} required
+            onChange={handleLastName}
+            required
           ></input>
           <label htmlFor="mobile_number" className="form-label">
             Mobile number:
@@ -113,7 +135,8 @@ function NewReservation() {
             type="tel"
             placeholder="###-###-####"
             // pattern="/\d{3}-\d{3}-\d{4}/"
-            onChange={handleMobileNumber} required
+            onChange={handleMobileNumber}
+            required
           ></input>
           <label htmlFor="reservation_date" className="form-label">
             Date:
@@ -126,7 +149,9 @@ function NewReservation() {
             type="date"
             placeholder="YYYY-MM-DD"
             pattern="\d{4}-\d{2}-\d{2}"
-            onChange={handleDateOfReservation} required
+            onChange={handleDateOfReservation}
+
+            required
           ></input>
           <label htmlFor="reservation_time" className="form-label">
             Time:
@@ -139,7 +164,8 @@ function NewReservation() {
             type="time"
             placeholder="HH:MM"
             pattern="[0-9]{2}:[0-9]{2}"
-            onChange={handleTimeOfReservation} required
+            onChange={handleTimeOfReservation}
+            required
           ></input>
           <label htmlFor="people" className="form-label">
             People:
@@ -150,7 +176,8 @@ function NewReservation() {
             id="exampleFormControlTextarea1"
             rows="3"
             placeholder="# (default to 1 if left blank)"
-            onChange={handlePeople} required
+            onChange={handlePeople}
+            required
           ></input>
         </div>
         {/* Cancel and Submit buttons with appropriate routing */}
@@ -158,11 +185,6 @@ function NewReservation() {
         <button onClick={goBack} className="btn btn-outline-danger">
           Cancel
         </button>
-        {/* <Link to="/" className="btn btn-outline-danger">
-          Cancel • Test Button • Go to dashboard
-        </Link> */}
-        {``} {``} {``} {``}
-        
         {/* below is experimental dialog prompt to confirm cancel */}
         {/* <!-- Button trigger modal --> */}
         {/* <button
@@ -221,12 +243,7 @@ function NewReservation() {
           </div>
         </div> */}
         {``} {``} {``} {``}
-        {/* this submit button has two types, how to make this clearer? does it matter? */}
-        <button
-          type="submit"
-          // onClick={handleSubmit}
-          className="btn btn-outline-success"
-        >
+        <button type="submit" className="btn btn-outline-success">
           Submit
         </button>
         {``} {``} {``} {``}
