@@ -107,18 +107,30 @@ async function dataValidator(req, res, next) {
 }
 
 
-// async function openRestaurantValidator(req, res, next) {
-// const date = new Date(req.body.data.reservation_date)
+async function futureDateValidator(req, res, next) {
+const date = new Date(req.body.data.reservation_date)
+  if (date > Date.now()) {
+    return next();
+  }
+  next({
+  status: 400,
+  message: "The reservation_date is in the past. Only future reservations are allowed!",
+});
+}
+
+async function openRestaurantValidator(req, res, next) {
+  const date = new Date(req.body.data.reservation_date)
+    if (date.getDay() !== 1) {
+      return next();
+    }
+    next({
+    status: 400,
+    message: "The reservation_date falls on a closed Tuesday!",
+  });
+  }
 
 
-//   if (date < Date.now()) {
-//     return next();
-//   }
-//   next({
-//   status: 400,
-//   message: "The reservation_date is in the past. Only future reservations are allowed!",
-// });
-// }
+  // for us-03 getminute gethour, create date from string like 122
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
@@ -130,7 +142,8 @@ module.exports = {
     asyncErrorBoundary(reservationDateValidator),
     asyncErrorBoundary(reservationTimeValidator),
     asyncErrorBoundary(peopleValidator),
-    // asyncErrorBoundary(openRestaurantValidator),
+    asyncErrorBoundary(futureDateValidator),
+    asyncErrorBoundary(openRestaurantValidator),
     asyncErrorBoundary(create),
   ],
 };
