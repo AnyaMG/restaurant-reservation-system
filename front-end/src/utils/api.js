@@ -69,14 +69,14 @@ export async function listReservations(params, signal) {
 }
 ///everything below this line is helper functions i added, this is for importing newReservation file
 /**
-* Retrieves all existing reservations.
-* @returns {Promise<[reservation]>}
-*  a promise that resolves to a possibly empty array of decks saved in the database.
-*/
+ * Retrieves all existing reservations.
+ * @returns {Promise<[reservation]>}
+ *  a promise that resolves to a possibly empty array of decks saved in the database.
+ */
 
 export async function createReservation(reservation, signal) {
   const url = `${API_BASE_URL}/reservations`;
-  const data = { data: reservation }
+  const data = { data: reservation };
   const options = {
     method: "POST",
     headers,
@@ -88,7 +88,7 @@ export async function createReservation(reservation, signal) {
 
 export async function createTable(table, signal) {
   const url = `${API_BASE_URL}/reservations`;
-  const data = { data: table }
+  const data = { data: table };
   const options = {
     method: "POST",
     headers,
@@ -98,3 +98,10 @@ export async function createTable(table, signal) {
   return await fetchJson(url, options);
 }
 
+export async function listTables(signal) {
+  const url = new URL(`${API_BASE_URL}/tables`);
+  // Object.entries(params).forEach(([key, value]) =>
+  //   url.searchParams.append(key, value.toString())
+  // );
+  return await fetchJson(url, { headers, signal }, [])
+}

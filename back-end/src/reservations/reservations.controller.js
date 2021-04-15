@@ -87,7 +87,7 @@ async function validateReservation(req, res, next) {
 
   // validate that reservation date is in the future
   const date = new Date(req.body.data.reservation_date);
-  if (date < Date.now()) {
+  if(new Date(req.body.data.reservation_date).valueOf() < date.valueOf()) {
     return next({
       status: 400,
       message:
@@ -99,7 +99,7 @@ async function validateReservation(req, res, next) {
   if (date.getDay() === 1) {
     return next({
       status: 400,
-      message: "The reservation_date falls on a closed Tuesday!",
+      message: "Invalid reservation_date: restaurant closed on Tuesdays!",
     });
   }
 
@@ -115,24 +115,10 @@ async function validateReservation(req, res, next) {
   return next();
 }
 
-// for us-03 getminute gethour, create date from string like 122
-
 module.exports = {
   list: [asyncErrorBoundary(list)],
   create: [
     asyncErrorBoundary(validateReservation),
     asyncErrorBoundary(create)
   ],
-  // create: [
-  //   asyncErrorBoundary(dataValidator),
-  //   asyncErrorBoundary(firstNameValidator),
-  //   asyncErrorBoundary(lastNameValidator),
-  //   asyncErrorBoundary(mobileNumberValidator),
-  //   asyncErrorBoundary(reservationDateValidator),
-  //   asyncErrorBoundary(reservationTimeValidator),
-  //   asyncErrorBoundary(peopleValidator),
-  //   asyncErrorBoundary(futureDateValidator),
-  //   asyncErrorBoundary(openRestaurantValidator),
-  //   asyncErrorBoundary(create),
-  // ],
 };

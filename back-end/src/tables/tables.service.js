@@ -1,18 +1,17 @@
-// const knex = require("../db/connection");
+const knex = require("../db/connection");
 
-// // function list(date) {
-// //   return knex("reservations")
-// //           .select("*")
-// //           .where({ "reservation_date": date })
-// //           .orderBy("reservation_time", "asc");
-// // }
+function list() {
+  return knex("tables")
+          .select("*")
+          .orderBy("table_name", "asc");
+}
 
-// function create(newTable) {
-//     return knex("tables")
-//             .insert(newTable)
-//             .returning(['first_name', 'last_name', 'mobile_number', 'people', 'reservation_date', 'reservation_time']);
-// }
+function update(newTable) {
+    return knex("tables")
+            .insert(newTable)
+            .returning(['name', 'capacity']);
+}
 
-// module.exports = {
-//   list, create,
-// };
+module.exports = {
+  list, update,
+};

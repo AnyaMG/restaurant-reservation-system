@@ -17,10 +17,8 @@ function NewTable() {
       capacity: tableCapacity,
     };
 
-
-    // await createTable(tableObj);
-    // const newTable = await createTable(tableObj);
-    // const { table_id } = newTable;
+    const newTable = await createTable(tableObj);
+    const { table_id } = newTable;
 
     history.push(`/dashboard`);
   };

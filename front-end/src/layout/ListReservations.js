@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 function ListReservations(props) {
   const handleDeleteClick = async () => {
     if (
-      window.confirm("Delete this reservation?\n\nYou will not be able to recover it.")
+      window.confirm(
+        "Delete this reservation?\n\nYou will not be able to recover it."
+      )
     ) {
       await deleteReservation(props.id);
     }

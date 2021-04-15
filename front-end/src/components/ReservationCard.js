@@ -14,8 +14,8 @@ const ReservationCard = ({ reservation }) => {
                     Time: {reservation.reservation_time}
                     <br/>
                     People: {reservation.people}
-                </p>
-                <a href="#" className="btn btn-primary">Go somewhere</a>
+                </p><a href="/reservations/${reservation_id}/seat" className="btn btn-outline-success btn-lg btn-block">Seat</a>
+
             </div>
         </div>
     )
