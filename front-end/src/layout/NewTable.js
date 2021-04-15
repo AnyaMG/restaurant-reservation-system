@@ -17,10 +17,11 @@ function NewTable() {
       capacity: tableCapacity,
     };
 
-    const newTable = await createTable(tableObj);
+    await createTable(tableObj);
+    // const newTable = await createTable(tableObj);
     // const { table_id } = newTable;
 
-    history.push(``);
+    history.push(`/dashboard`);
   };
 
   const handleTableName = (e) => {

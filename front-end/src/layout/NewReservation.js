@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createReservation } from "../utils/api";
 import { formatAsDate, today } from "../utils/date-time";
 import { Link, useHistory } from "react-router-dom";
-import ReservationError from "./ReservationError"
+import ReservationError from "./ReservationError";
 
 // create NewReservation component
 function NewReservation() {
@@ -13,30 +13,30 @@ function NewReservation() {
   const [mobileNumber, setMobileNumber] = useState("");
   const [dateOfReservation, setDateOfReservation] = useState("");
   const [timeOfReservation, setTimeOfReservation] = useState("");
-  const [people, setPeople] = useState(1); 
-  const [error, setError] = useState([])
+  const [people, setPeople] = useState(1);
+  const [error, setError] = useState([]);
 
   // click handler for Submit button
   const handleSubmit = async (e) => {
-
     e.preventDefault();
-if (dateOfReservation < today()) {
-  setError([...error, "Past dates not valid!"])
-  return;
-}
+    if (dateOfReservation < today()) {
+      setError([...error, "Past dates not valid!"]);
+      return;
+    }
 
-let replacedTime = timeOfReservation.replace(":", "");
-if (replacedTime <1030 || replacedTime > 2130) {
-  setError([...error, "Outside operating hours!"])
-  return;
-}
+    let replacedTime = timeOfReservation.replace(":", "");
+    console.log(timeOfReservation);
+    if (replacedTime < 1030 || replacedTime > 2130) {
+      setError([...error, "Outside operating hours!"]);
+      return;
+    }
 
-let newDate = new Date(dateOfReservation)
-let dayOfWeek = newDate.getDay()
-if (dayOfWeek === 1){
-  setError([...error, "Restaurant is closed on Tuesdays!"])
-  return;
-}
+    let newDate = new Date(dateOfReservation);
+    let dayOfWeek = newDate.getDay();
+    if (dayOfWeek === 1) {
+      setError([...error, "Restaurant is closed on Tuesdays!"]);
+      return;
+    }
     // a single new reservation should be pushed to /dashboard upon Submit
     const reservationObj = {
       first_name: firstName,
@@ -81,9 +81,11 @@ if (dayOfWeek === 1){
   return (
     // breadcrumb nav links atop the page with routing to dashboard
     <div>
-{error.length ? error.map((err)=>{
-        return <ReservationError error={error}/> 
-      }) : ""}
+      {error.length
+        ? error.map((err) => {
+            return <ReservationError key={err} error={err} />;
+          })
+        : ""}
 
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
@@ -150,7 +152,6 @@ if (dayOfWeek === 1){
             placeholder="YYYY-MM-DD"
             pattern="\d{4}-\d{2}-\d{2}"
             onChange={handleDateOfReservation}
-
             required
           ></input>
           <label htmlFor="reservation_time" className="form-label">
