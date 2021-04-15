@@ -25,7 +25,6 @@ function NewReservation() {
     }
 
     let replacedTime = timeOfReservation.replace(":", "");
-    console.log(timeOfReservation);
     if (replacedTime < 1030 || replacedTime > 2130) {
       setError([...error, "Outside operating hours!"]);
       return;
@@ -44,7 +43,7 @@ function NewReservation() {
       mobile_number: mobileNumber,
       reservation_date: dateOfReservation,
       reservation_time: timeOfReservation,
-      people: people, // must be at least 1
+      people: parseInt(people), // must be at least 1
     };
 
     const newReservation = await createReservation(reservationObj);
