@@ -74,6 +74,11 @@ export async function listReservations(params, signal) {
  *  a promise that resolves to a possibly empty array of decks saved in the database.
  */
 
+export async function readReservation(id, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations/${id}`)
+  return await fetchJson(url, { headers, signal }, []);
+}
+
 export async function createReservation(reservation, signal) {
   const url = `${API_BASE_URL}/reservations`;
   const data = { data: reservation };
@@ -87,7 +92,7 @@ export async function createReservation(reservation, signal) {
 }
 
 export async function createTable(table, signal) {
-  const url = `${API_BASE_URL}/reservations`;
+  const url = `${API_BASE_URL}/tables`;
   const data = { data: table };
   const options = {
     method: "POST",
@@ -104,4 +109,15 @@ export async function listTables(signal) {
   //   url.searchParams.append(key, value.toString())
   // );
   return await fetchJson(url, { headers, signal }, [])
+}
+
+export async function assignReservationToTable({reservation_id, table_id}, signal) {
+  const url = new URL(`${API_BASE_URL}/tables/${table_id}/seat`);
+  const data = { data: { reservation_id: reservation_id }}
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(data)
+  }
+  return await fetchJson(url, options);
 }

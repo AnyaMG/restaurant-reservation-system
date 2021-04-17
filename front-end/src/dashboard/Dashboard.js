@@ -28,15 +28,22 @@ function Dashboard({ date }) {
 
   useEffect(loadDashboard, [date]);
 
+  //   //function previousDay(){
+  //   };
+  //   //function currentDay([date]){
+  // };
+  //   //function nextDay(){
+  //   };
+
   function loadDashboard() {
     const abortController = new AbortController();
     setReservationsError(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
-      listTables(abortController.signal)
-    .then(setTables)
-    .catch(tablesError, setTablesError)
+    listTables(abortController.signal)
+      .then(setTables)
+      .catch(tablesError, setTablesError);
     return () => abortController.abort();
   }
 
@@ -47,6 +54,7 @@ function Dashboard({ date }) {
           <li className="breadcrumb-item">
             <h3>Dashboard</h3>
           </li>
+          <li class-name="breadcrumb-item"></li>
           <li className="breadcrumb-item active" aria-current="page">
             <h3>{date}</h3>
           </li>
@@ -69,20 +77,11 @@ function Dashboard({ date }) {
                 />
               );
             })}
-
-
-
-            
           </div>
           <div className="col">
             <h5>Tables</h5>
             {tables.map((table) => {
-              return (
-                <TableCard
-                  key={table.table_id}
-                  table={table}
-                />
-              );
+              return <TableCard key={table.table_id} table={table} />;
             })}
           </div>
         </div>

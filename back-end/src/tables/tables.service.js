@@ -6,12 +6,26 @@ function list() {
           .orderBy("table_name", "asc");
 }
 
-function update(newTable) {
+function update(updatedTable) {
     return knex("tables")
-            .insert(newTable)
-            .returning(['name', 'capacity']);
+            .update(updatedTable)
+            .where({"table_id": updatedTable.table_id})
+            .returning("*");
 }
 
+function read(tableId) {
+  return knex("tables")
+            .select("*")
+            .where({ "table_id": tableId })
+            .first();
+}
+
+function create(newTable) {
+  return knex("tables")
+            .insert(newTable)
+            .returning("*");
+} 
+
 module.exports = {
-  list, update,
+  list, update, read, create
 };

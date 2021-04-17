@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ReservationCard = ({ reservation }) => {
-    console.log(reservation);
     return (
         <div className="card" style={{width: "18rem"}}>
             <div className="card-body">
@@ -14,7 +14,15 @@ const ReservationCard = ({ reservation }) => {
                     Time: {reservation.reservation_time}
                     <br/>
                     People: {reservation.people}
-                </p><a href="/reservations/${reservation_id}/seat" className="btn btn-outline-success btn-lg btn-block">Seat</a>
+
+{/* The SEAT button needs to have a show/hide toggle and only be displayed when  status is "booked" ; onClick when Seat button is clicked, STATUS should change to "seated" and hide the Seat button. After that part, the FINISH button should be activated with a dialog prompt.*/}
+                </p>
+                <Link
+                    to={`/reservations/${reservation.reservation_id}/seat`}
+                    href={`/reservations/${reservation.reservation_id}/seat`}
+                    className="btn btn-outline-success btn-lg btn-block">
+                    Seat
+                </Link>
 
             </div>
         </div>

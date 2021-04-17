@@ -18,6 +18,13 @@ async function create(req, res) {
     .then((data) => res.status(201).json({ data: data[0] }));
 }
 
+async function read(req, res) {
+  const { reservation_id } = req.params;
+  reservationsService
+    .read(reservation_id)
+    .then((data) => res.status(200).json({ data: data }));
+}
+
 async function validateReservation(req, res, next) {
   // validate data
   if (!req.body.data) {
@@ -121,4 +128,5 @@ module.exports = {
     asyncErrorBoundary(validateReservation),
     asyncErrorBoundary(create)
   ],
+  read: [asyncErrorBoundary(read)]
 };

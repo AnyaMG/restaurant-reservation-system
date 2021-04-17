@@ -14,11 +14,10 @@ function NewTable() {
 
     const tableObj = {
       table_name: tableName,
-      capacity: tableCapacity,
+      capacity: parseInt(tableCapacity),
     };
 
-    const newTable = await createTable(tableObj);
-    const { table_id } = newTable;
+    await createTable(tableObj);
 
     history.push(`/dashboard`);
   };
