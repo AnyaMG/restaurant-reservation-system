@@ -6,19 +6,17 @@ const TableCard = ({ table }) => {
   return (
     <div className="card" style={{ width: "18rem" }}>
       <div className="card-body">
-        <h5 className="card-title">
+        <h5 className="card-title">Name: {table.name}
         </h5>
         <p className="card-text">
-        Table name: {table.name}
           Capacity: {table.capacity}
        
         </p>
-        <a
-          href="/reservations/${reservation_id}/seat"
-          className="btn btn-outline-success btn-lg btn-block"
-        >
-          Seat
-        </a>
+        
+          Status of FREE or OCCUPIED should be displayed. 
+
+          IF status=occupied display FINISH button. FINISH button to launch dialog "Is this table ready to seat new guests? This cannot be undone." No changes on cancel.
+        
       </div>
     </div>
   );
