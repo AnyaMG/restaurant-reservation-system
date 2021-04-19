@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
-
 import ReservationCard from "../components/ReservationCard";
 import TableCard from "../components/TableCard";
 
@@ -65,6 +64,29 @@ function Dashboard({ date }) {
         <h4 className="mb-0">Schedule for {date}</h4>
       </div> */}
       <ErrorAlert error={reservationsError} />
+
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col">
+            <div
+              class="btn-group"
+              role="group"
+              aria-label="Basic mixed styles example"
+            >
+              <a href="#" type="button" role="button" class="btn btn-outline-info">
+                Previous
+              </a>
+              <a href={`/reservations/`} type="button" role="button" class="btn btn-info">
+                Today
+              </a>
+              <a href="#" type="button" role="button" class="btn btn-outline-info">
+                Next
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="container-fluid">
         <div className="row">
           <div className="col">

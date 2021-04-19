@@ -26,6 +26,14 @@ function create(newTable) {
             .returning("*");
 } 
 
+
+function resetTable(tableId) {
+  return knex("tables")
+            .where({ "table_id": tableId })
+            .update({"reservation_id": null, "occupied": false})
+            .returning("*");
+} 
+
 module.exports = {
-  list, update, read, create
+  list, update, read, create, resetTable
 };

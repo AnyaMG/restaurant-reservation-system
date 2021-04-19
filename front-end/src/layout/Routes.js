@@ -5,8 +5,8 @@ import NotFound from "./NotFound";
 import { today } from "../utils/date-time";
 import NewReservation from "../layout/NewReservation";
 import NewTable from "../layout/NewTable";
-import ReservationSeat from './ReservationSeat';
-
+import ReservationSeat from "./ReservationSeat";
+import Search from "../layout/Search";
 
 /**
  * Defines all the routes for the application.
@@ -18,34 +18,45 @@ import ReservationSeat from './ReservationSeat';
 function Routes() {
   return (
     <div>
-    <Switch>
-      <Route exact={true} path="/">
-        <Redirect to={"/dashboard"} />
-      </Route>
-      <Route exact={true} path="/reservations">
-        <Redirect to={"/dashboard"} />
-      </Route>
+      <Switch>
 
-      <Route path="/dashboard*">
-        <Dashboard date={today()} />
-      </Route>
+        <Route exact={true} path="/">
+          <Redirect to={"/dashboard"} />
+        </Route>
+        
+        <Route exact={true} path="/reservations">
+          <Redirect to={"/dashboard"} />
+        </Route>
 
-      <Route path="/dashboard">
-        <Dashboard date={today()} />
-      </Route>
-      <Route exact={true} path="/reservations/new">
-        <NewReservation />
-      </Route>
-      <Route exact={true} path="/reservations/:reservation_id/seat">
-        <ReservationSeat />
-      </Route>
-      <Route exact={true} path="/tables/new">
-        <NewTable />
-      </Route>
-      <Route>
-        <NotFound />
-      </Route>
-    </Switch>
+        <Route path="/dashboard*">
+          <Dashboard date={today()} />
+        </Route>
+
+        <Route path="/dashboard">
+          <Dashboard date={today()} />
+        </Route>
+
+        <Route exact={true} path="/reservations/new">
+          <NewReservation />
+        </Route>
+
+        <Route exact={true} path="/reservations/:reservation_id/seat">
+          <ReservationSeat />
+        </Route>
+
+        <Route exact={true} path="/tables/new">
+          <NewTable />
+        </Route>
+
+        <Route exact={true} path="/search">
+          <Search />
+        </Route>
+
+        <Route>
+          <NotFound />
+        </Route>
+
+      </Switch>
     </div>
   );
 }

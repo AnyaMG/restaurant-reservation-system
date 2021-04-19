@@ -17,7 +17,9 @@
  router
  .route("/:table_id/seat")
  .put(controller.update)
+ .delete(controller.reassignTable)
  .all(methodNotAllowed);
+
  
  module.exports = router;
  

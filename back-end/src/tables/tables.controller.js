@@ -10,9 +10,8 @@ const app = express();
 
 async function list(req, res) {
   tablesService.list().then((data) => {
-
-
-    res.json({ data: data })});
+    res.json({ data: data });
+  });
 }
 
 async function update(req, res) {
@@ -21,13 +20,12 @@ async function update(req, res) {
   const updatedTable = {
     ...table,
     occupied: true,
-    reservation_id
+    reservation_id,
   };
 
   tablesService
     .update(updatedTable)
     .then((data) => res.status(200).json({ data: data[0] }));
-
 }
 
 async function create(req, res) {
@@ -44,8 +42,8 @@ async function validateData(req, res, next) {
   if (!data) {
     next({
       status: 400,
-      message: "data is missing"
-    })
+      message: "data is missing",
+    });
   }
 
   res.locals.data = data;
@@ -59,7 +57,7 @@ async function reservationExists(req, res, next) {
     next({
       status: 400,
       message: "reservation_id is missing",
-    })
+    });
   }
 
   const reservation = await reservationsService.read(reservation_id);
@@ -96,28 +94,28 @@ async function validateCreateTable(req, res, next) {
     next({
       status: 400,
       message: "table_name is missing or empty",
-    })
+    });
   }
 
   if (data.table_name.length < 2) {
     next({
       status: 400,
       message: "table_name is too short",
-    })
+    });
   }
 
   if (!data.capacity) {
     next({
       status: 400,
       message: "capacity is missing or zero",
-    })
+    });
   }
 
   if (typeof data.capacity !== "number") {
     next({
       status: 400,
-      message: "capacity is not a number"
-    })
+      message: "Capacity is not a number",
+    });
   }
 
   return next();
@@ -125,20 +123,20 @@ async function validateCreateTable(req, res, next) {
 
 async function validateUpdateTable(req, res, next) {
   const { table, reservation } = res.locals;
-  console.log(table);
-  
+  // console.log(table);
+
   if (table.occupied) {
     next({
       status: 400,
       message: "Table is already occupied",
-    })
+    });
   }
 
   if (reservation.people > table.capacity) {
     next({
       status: 400,
-      message: "Table does not have enough capacity."
-    })
+      message: "Table does not have enough capacity",
+    });
   }
 
   return next();
@@ -154,18 +152,35 @@ async function nameValidator(req, res, next) {
   });
 }
 
+
+
+async function reassignTable(req, res, next) {
+  const { table_id } = req.params;
+  const table = await tablesService.resetTable(table_id);
+  if (!table.occupied) {
+    next({
+      status: 400,
+      message: `${table_id} is not occupied.`,
+    });
+  }
+ res.status(200).json({ data: data[0] });
+}
+
+
 module.exports = {
   list: [asyncErrorBoundary(list)],
   create: [
     asyncErrorBoundary(validateData),
     asyncErrorBoundary(validateCreateTable),
-    asyncErrorBoundary(create)
+    asyncErrorBoundary(create),
   ],
   update: [
     asyncErrorBoundary(validateData),
     asyncErrorBoundary(reservationExists),
     asyncErrorBoundary(tableExists),
     asyncErrorBoundary(validateUpdateTable),
-    asyncErrorBoundary(update)
+    asyncErrorBoundary(update),
   ],
+reassignTable: [asyncErrorBoundary(tableExists), 
+  asyncErrorBoundary(reassignTable)],
 };
