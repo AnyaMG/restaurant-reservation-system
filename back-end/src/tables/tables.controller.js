@@ -156,14 +156,17 @@ async function nameValidator(req, res, next) {
 
 async function reassignTable(req, res, next) {
   const { table_id } = req.params;
-  const table = await tablesService.resetTable(table_id);
-  if (!table.occupied) {
+  const { table } = res.locals;
+
+  if (!table.reservation_id) {
     next({
       status: 400,
       message: `${table_id} is not occupied.`,
     });
   }
- res.status(200).json({ data: data[0] });
+
+  const data = await tablesService.resetTable(table_id);
+  res.status(200).json({ data: data[0] });
 }
 
 
@@ -183,4 +186,5 @@ module.exports = {
   ],
 reassignTable: [asyncErrorBoundary(tableExists), 
   asyncErrorBoundary(reassignTable)],
+  
 };

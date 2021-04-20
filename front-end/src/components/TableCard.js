@@ -1,39 +1,44 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
-import { deleteTable } from "../utils/api";
+import { Link, useHistory, Redirect } from "react-router-dom";
+import { deleteTable, listTables } from "../utils/api";
 
-const TableCard = ({ table }) => {
-const history = useHistory();
-// const [remainingTables, setRemainingTables] = useState("");
+const TableCard = ({ table, loadDashboard }) => {
+  const history = useHistory();
+  // const [remainingTables, setRemainingTables] = useState("");
 
-  const finishTable = async () => {
+  const finishTable = async (e) => {
+    e.preventDefault();
     if (
-      window.confirm("Is this table ready to seat new guests? \n\n This cannot be undone.")
+      window.confirm(
+        "Is this table ready to seat new guests? \n\n This cannot be undone."
+      )
     ) {
-      
-      await deleteTable(table.table_id); 
-      window.location.reload();
-      // we are not actually deleting a table, just resetting status
-       // added this in 
-      history.push("/");
+      const returnedTable = await deleteTable(table.table_id);
+
+      if (returnedTable) loadDashboard();
     }
   };
 
+
+
   return (
-    <div
-      className="card"
-      style={{ width: "18rem" }}
-      
-    >
+    <div className="card" style={{ width: "18rem" }}>
       <div className="card-body">
         <h5 className="card-title">Name: {table.table_name}</h5>
         <h5 className="card-text">Capacity: {table.capacity}</h5>
-        <h5 className="card-text" data-table-id-status={table.table_id}>Status: {table.occupied ? "Occupied" : "Free"}</h5> 
+        <h5 className="card-text" data-table-id-status={table.table_id}>
+          Status: {table.reservation_id ? "occupied" : "free"}
+        </h5>
 
-        {table.occupied ? 
-          (<button className="btn btn-outline-success btn-lg btn-block" data-table-id-finish={table.table_id} onClick={finishTable}>Finish
-        </button>) : null
-        }
+        {table.reservation_id ? (
+          <button
+            className="btn btn-outline-success btn-lg btn-block"
+            data-table-id-finish={table.table_id}
+            onClick={finishTable}
+          >
+            Finish
+          </button>
+        ) : null}
       </div>
     </div>
   );

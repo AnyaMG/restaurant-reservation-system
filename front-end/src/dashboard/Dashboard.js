@@ -11,7 +11,7 @@ import TableCard from "../components/TableCard";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date }) {
+function Dashboard({ date }) { // don't pass date, try creating state for date
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
   const [tables, setTables] = useState([]);
@@ -34,7 +34,7 @@ function Dashboard({ date }) {
   //   //function nextDay(){
   //   };
 
-  function loadDashboard() {
+  function loadDashboard() { // consider reloading on seat or on table change rather than just date
     const abortController = new AbortController();
     setReservationsError(null);
     listReservations({ date }, abortController.signal)
@@ -103,7 +103,7 @@ function Dashboard({ date }) {
           <div className="col">
             <h5>Tables</h5>
             {tables.map((table) => {
-              return <TableCard key={table.table_id} table={table} />;
+              return <TableCard key={table.table_id} table={table} loadDashboard={loadDashboard} />;
             })}
           </div>
         </div>

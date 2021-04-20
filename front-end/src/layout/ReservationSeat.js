@@ -12,7 +12,7 @@ function ReservationSeat() {
   const [reservation, setReservation] = useState({});
   const [tables, setTables] = useState([]);
   const [selectedTable, setSelectedTable] = useState("");
-  const [occupiedStatus, setOccupiedStatus] = useState(false); // add this to change status to occupied 
+  // const [occupiedStatus, setOccupiedStatus] = useState(false); // add this to change status to occupied 
 
   useEffect(() => {
     const loadTables = async () => {
@@ -34,15 +34,15 @@ function ReservationSeat() {
   };
 
   //added this thing
-  const statusModify = async (e) => {
-   if (
-       occupiedStatus === false
-   ) {
-       setOccupiedStatus(true)
-   } else {
-       setOccupiedStatus(false)
-   }
-  };
+  // const statusModify = async (e) => {
+  //  if (
+  //      occupiedStatus === false
+  //  ) {
+  //      setOccupiedStatus(true)
+  //  } else {
+  //      setOccupiedStatus(false)
+  //  }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
