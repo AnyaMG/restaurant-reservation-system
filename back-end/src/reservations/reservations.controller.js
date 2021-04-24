@@ -8,8 +8,15 @@ const app = express();
  */
 
 async function list(req, res) {
-  const { date } = req.query;
-  reservationsService.list(date).then((data) => res.json({ data: data }));
+  const { date, mobile_number } = req.query;
+
+  if (mobile_number) {
+    reservationsService.search(mobile_number)
+      .then((data) => res.status(200).json({ data: data }));
+  } else {
+    reservationsService.list(date).then((data) => res.json({ data: data }));
+  }
+  
 }
 
 async function create(req, res) {
@@ -24,6 +31,47 @@ async function read(req, res) {
     .read(reservation_id)
     .then((data) => res.status(200).json({ data: data }));
 }
+
+// added this thing
+
+async function updateReservationStatus(req, res) {
+  const { reservation } = res.locals;
+  console.log(reservation.reservation_id);
+  reservationsService
+    .update(parseInt(reservation.reservation_id), req.body.data.status)
+    .then((data) => res.status(200).json({ data: data[0] }));
+}
+
+async function validateReservationStatus(req, res, next) {
+  const foundReservation = await reservationsService.read(parseInt(req.params.reservation_id))
+if (!foundReservation) {
+  return next({
+    status: 404,
+    message: `This ${req.params.reservation_id} doesn't exist!`,
+  });
+}
+  if (foundReservation.status === "finished") {
+    return next({
+      status: 400,
+      message: "Reservation is already finished!",
+    });
+  }
+  if (
+    req.body.data.status === "booked" ||
+    req.body.data.status === "seated" ||
+    req.body.data.status === "finished"
+  ) {
+    res.locals.reservation = foundReservation;
+    return next();
+  } else {
+    return next({
+      status: 400,
+      message: "This reservation_status is unknown!",
+    });
+  }
+}
+
+// stick us-08 updateReservation here
 
 async function validateReservation(req, res, next) {
   // validate data
@@ -51,7 +99,10 @@ async function validateReservation(req, res, next) {
   }
 
   // validate mobile number
-  if (!req.body.data.mobile_number || req.body.data.mobile_number.length === 0) {
+  if (
+    !req.body.data.mobile_number ||
+    req.body.data.mobile_number.length === 0
+  ) {
     return next({
       status: 400,
       message: "Must include valid mobile_number!",
@@ -94,7 +145,7 @@ async function validateReservation(req, res, next) {
 
   // validate that reservation date is in the future
   const date = new Date(req.body.data.reservation_date);
-  if(new Date(req.body.data.reservation_date).valueOf() < date.valueOf()) {
+  if (new Date(req.body.data.reservation_date).valueOf() < date.valueOf()) {
     return next({
       status: 400,
       message:
@@ -118,15 +169,41 @@ async function validateReservation(req, res, next) {
       message: "The reservation_time is after store operating hours!",
     });
   }
-  
+
+  if (
+    // !req.body.data.reservation_status ||
+    !req.body.data.reservation_time.match(/[0-9]{2}:[0-9]{2}/g)
+  ) {
+    return next({
+      status: 400,
+      message: "Must include valid reservation_time!",
+    });
+  }
+
+  // added this thing
+
+  if (req.body.data.status === "seated") {
+    return next({
+      status: 400,
+      message: "Reservation is already seated!",
+    });
+  }
+  if (req.body.data.status === "finished") {
+    return next({
+      status: 400,
+      message: "Reservation is already finished!",
+    });
+  }
   return next();
 }
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
-  create: [
-    asyncErrorBoundary(validateReservation),
-    asyncErrorBoundary(create)
+  create: [asyncErrorBoundary(validateReservation), asyncErrorBoundary(create)],
+  read: [asyncErrorBoundary(read)],
+  update: [
+    asyncErrorBoundary(validateReservationStatus),
+    asyncErrorBoundary(updateReservationStatus)
+   
   ],
-  read: [asyncErrorBoundary(read)]
 };

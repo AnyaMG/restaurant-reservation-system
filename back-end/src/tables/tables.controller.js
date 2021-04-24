@@ -23,6 +23,9 @@ async function update(req, res) {
     reservation_id,
   };
 
+  reservationsService
+    .update(parseInt(reservation_id), "seated");
+
   tablesService
     .update(updatedTable)
     .then((data) => res.status(200).json({ data: data[0] }));
@@ -66,6 +69,13 @@ async function reservationExists(req, res, next) {
     next({
       status: 404,
       message: `Reservation with ID ${reservation_id} does not exist.`,
+    });
+  }
+
+  if (reservation.status === "seated") {
+    next({
+      status: 400,
+      message: `Reservation is already seated.`
     });
   }
 
@@ -142,18 +152,6 @@ async function validateUpdateTable(req, res, next) {
   return next();
 }
 
-async function nameValidator(req, res, next) {
-  if (!table_name || table_name.length < 1) {
-    return next();
-  }
-  next({
-    status: 400,
-    message: "Table name must include at least 2 letters!",
-  });
-}
-
-
-
 async function reassignTable(req, res, next) {
   const { table_id } = req.params;
   const { table } = res.locals;
@@ -164,6 +162,9 @@ async function reassignTable(req, res, next) {
       message: `${table_id} is not occupied.`,
     });
   }
+
+  reservationsService
+    .update(table.reservation_id, "finished");
 
   const data = await tablesService.resetTable(table_id);
   res.status(200).json({ data: data[0] });
@@ -184,7 +185,6 @@ module.exports = {
     asyncErrorBoundary(validateUpdateTable),
     asyncErrorBoundary(update),
   ],
-reassignTable: [asyncErrorBoundary(tableExists), 
-  asyncErrorBoundary(reassignTable)],
-  
+  reassignTable: [asyncErrorBoundary(tableExists), 
+    asyncErrorBoundary(reassignTable)],
 };

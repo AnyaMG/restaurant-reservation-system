@@ -1,27 +1,49 @@
 const knex = require("../db/connection");
 
-
-
-function list(date) {
+async function list(date) {
   return knex("reservations")
-          .select("*")
-          .where({ "reservation_date": date })
-          .orderBy("reservation_time", "asc");
+    .select("*")
+    .where({ reservation_date: date })
+    .whereNot({ status: "finished" })
+    .orderBy("reservation_time", "asc");
 }
 
-function create(newReservation) {
-    return knex("reservations")
-            .insert(newReservation)
-            .returning("*");
+async function create(newReservation) {
+  return knex("reservations").insert(newReservation).returning("*");
 }
 
-function read(reservationId) {
+async function read(reservationId) {
   return knex("reservations")
-            .select("*")
-            .where({ "reservation_id": reservationId })
-            .first();
+    .select("*")
+    .where({ reservation_id: reservationId })
+    .first();
+}
+
+// added this thing
+
+async function update(reservation_id, status) {
+  return knex("reservations")
+    .update({"status": status})
+    .where({"reservation_id": reservation_id})
+    .returning("*");
+}
+
+
+
+async function search(mobile_number) {
+  return knex("reservations")
+    .select("*")
+    .whereRaw(
+      "translate(mobile_number, '() -', '') like ?",
+      `%${mobile_number.replace(/\D/g, "")}%`
+    )
+    .orderBy("reservation_date");
 }
 
 module.exports = {
-  list, create, read
+  list,
+  create,
+  read,
+  update,
+  search,
 };

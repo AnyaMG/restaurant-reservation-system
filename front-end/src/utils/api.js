@@ -121,6 +121,26 @@ export async function assignReservationToTable({reservation_id, table_id}, signa
   }
   return await fetchJson(url, options);
 }
+// just created this one to try and deal with us-06
+export async function assignReservationStatus(status, id, signal){
+  const url = new URL(`${API_BASE_URL}/reservations/${id}/status`);
+  const data = {data: { status: status } }
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(data)
+  }
+  return await fetchJson(url, options);
+}
+
+
+
+
+export async function mobileSearch(mobile_number, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations?mobile_number=${mobile_number}`)
+  return await fetchJson(url, { headers, signal }, []);
+}
+
 
 export async function deleteTable(tableId, signal) {
   const url = `${API_BASE_URL}/tables/${tableId}/seat`;

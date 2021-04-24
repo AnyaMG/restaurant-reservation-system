@@ -4,6 +4,7 @@ import {
   listTables,
   readReservation,
   assignReservationToTable,
+  assignReservationStatus
 } from "../utils/api";
 
 function ReservationSeat() {
@@ -58,6 +59,7 @@ function ReservationSeat() {
     //   table_occupied: occupiedStatus.statusModify, //added this
     };
     await assignReservationToTable(data);
+
     history.push("/");
   };
 

@@ -1,6 +1,6 @@
 import React from "react";
-import { Link, useHistory, Redirect } from "react-router-dom";
-import { deleteTable, listTables } from "../utils/api";
+import { useHistory } from "react-router-dom";
+import { deleteTable, assignReservationStatus } from "../utils/api";
 
 const TableCard = ({ table, loadDashboard }) => {
   const history = useHistory();
