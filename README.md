@@ -2,7 +2,7 @@
 
 ## Live demo:
 
-[Restaurant Reservation System](https://THISISWHERETHEURLGOES.vercel.app "Restaurant Reservation System")  
+[Restaurant Reservation System](https://reservations-hdyactvx3-anyamg.vercel.app/)  
 
 ## Application Summary:
 
@@ -40,7 +40,7 @@ This application was created using JavaScript, React, Node, Express, Knex, Postg
 ## ER Diagram:
 
 ![Table relations](https://i.ibb.co/3S7twJN/erd.png)
-```
+
 
 ## Installation:
 
@@ -50,12 +50,12 @@ To install required dependencies:
 
 To launch server and site preview in development mode:
 
-npm start start:dev
+`npm start start:dev`
 
 To connect to a PostgreSql database:
 
-cp ./back-end/.env.sample ./back-end/.env.
-```
+`cp ./back-end/.env.sample ./back-end/.env`
+
 
 Then, update the back-end .env files with your database information:
 
