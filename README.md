@@ -2,7 +2,7 @@
 
 ## Live demo:
 
-[Restaurant Reservation System](https://THISISWHERETHEURLGOES.vercel.app "Restaurant Reservation System")  
+[Restaurant Reservation System](https://reservations-hdyactvx3-anyamg.vercel.app/)  
 
 ## Application Summary:
 
@@ -13,9 +13,8 @@ The "search" page allows the user to enter a mobile number to pull up any existi
 The "new table" page allows for the creation of new tables to accommodate different party sizes.
 
 ## Screenshots
-![Image of Dashboard](PUT A URL HERE)
-![Image of New Reservation](PUT A URL HERE)
-![Image of Search](PUT A URL HERE)
+![Image of Dashboard](https://i.ibb.co/Z1vzk5t/dash.png)
+![Image of New Reservation](https://i.ibb.co/n82jhzc/create.png)
 
 ## Tech Stack:
 
@@ -40,7 +39,7 @@ This application was created using JavaScript, React, Node, Express, Knex, Postg
 ## ER Diagram:
 
 ![Table relations](https://i.ibb.co/3S7twJN/erd.png)
-```
+
 
 ## Installation:
 
@@ -50,12 +49,12 @@ To install required dependencies:
 
 To launch server and site preview in development mode:
 
-npm start start:dev
+`npm start start:dev`
 
 To connect to a PostgreSql database:
 
-cp ./back-end/.env.sample ./back-end/.env.
-```
+`cp ./back-end/.env.sample ./back-end/.env`
+
 
 Then, update the back-end .env files with your database information:
 
