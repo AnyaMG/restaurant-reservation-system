@@ -44,7 +44,7 @@ const ReservationCard = ({ reservation, loadDashboard }) => {
           <Link
             to={`/reservations/${reservation.reservation_id}/seat`}
             href={`/reservations/${reservation.reservation_id}/seat`}
-            className="btn btn-outline-success btn-lg btn-block"
+            className="btn btn-success btn-lg btn-block"
           >
             Seat
           </Link>
@@ -54,13 +54,13 @@ const ReservationCard = ({ reservation, loadDashboard }) => {
       { reservation.status === "booked" ? <Link
         to={`/reservations/${reservation.reservation_id}/edit`}
         href={`/reservations/${reservation.reservation_id}/edit`}
-        className="btn btn-outline-success btn-lg btn-block"
+        className="btn btn-info btn-lg btn-block"
       >
         Edit
       </Link> : null }
       <button
         data-reservation-id-cancel={reservation.reservation_id}
-        className="btn btn-outline-success btn-lg btn-block"
+        className="btn btn-danger btn-lg btn-block"
         onClick={cancelPrompt}
       >
         Cancel

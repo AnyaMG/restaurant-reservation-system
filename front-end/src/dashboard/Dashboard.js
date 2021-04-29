@@ -58,7 +58,7 @@ function Dashboard({ date }) { // don't pass date, try creating state for date
 
   return (
     <main>
-      <nav className="mt-3" aria-label="breadcrumb">
+      {/* <nav className="mt-3" aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
             <h3>Dashboard</h3>
@@ -68,16 +68,26 @@ function Dashboard({ date }) { // don't pass date, try creating state for date
             <h3>{format(new Date(date), "MMMM dd, yyyy")}</h3>
           </li>
         </ol>
-      </nav>
+      </nav> */}
+      
+
       {/* <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
         <h4 className="mb-0">Schedule for {date}</h4>
       </div> */}
       <ErrorAlert error={reservationsError} />
 
-      <div className="container-fluid">
+      <div className="container">
+        <div className="row" style={{"justify-content": "center"}}>
+          <div className="col-3 text-center">
+            <h2>Dashboard &nbsp;</h2>
+          </div>
+          <div className="col-3 text-center">
+            <h2>{format(new Date(date), "MMMM dd, yyyy")}</h2>
+          </div>
+        </div>
         <div className="row">
-          <div className="col">
+          <div className="col text-center">
             <div
               className="btn-group"
               role="group"
@@ -101,9 +111,9 @@ function Dashboard({ date }) { // don't pass date, try creating state for date
         </div>
       </div>
 
-      <div className="container-fluid">
+      <div className="container">
         <div className="row">
-          <div className="col">
+          <div className="col" style={{display: "flex", "flex-direction": "column", "align-items": "center"}}>
             <h5>Reservations</h5>
             {reservations.map((reservation) => {
               return (
@@ -115,7 +125,7 @@ function Dashboard({ date }) { // don't pass date, try creating state for date
               );
             })}
           </div>
-          <div className="col">
+          <div className="col" style={{display: "flex", "flex-direction": "column", "align-items": "center"}}>
             <h5>Tables</h5>
             {tables.map((table) => {
               return <TableCard key={table.table_id} table={table} loadDashboard={loadDashboard} />;

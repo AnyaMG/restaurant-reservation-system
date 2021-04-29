@@ -22,14 +22,14 @@ const TableCard = ({ table, loadDashboard }) => {
     <div className="card" style={{ width: "18rem" }}>
       <div className="card-body">
         <h5 className="card-title">Name: {table.table_name}</h5>
-        <h5 className="card-text">Capacity: {table.capacity}</h5>
-        <h5 className="card-text" data-table-id-status={table.table_id}>
+        <p className="card-text">Capacity: {table.capacity}</p>
+        <p className="card-text" data-table-id-status={table.table_id}>
           Status: {table.reservation_id ? "occupied" : "free"}
-        </h5>
+        </p>
 
         {table.reservation_id ? (
           <button
-            className="btn btn-outline-success btn-lg btn-block"
+            className="btn btn-success btn-lg btn-block"
             data-table-id-finish={table.table_id}
             onClick={finishTable}
           >

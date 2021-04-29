@@ -10,3 +10,13 @@
 .breadcrumb-item+.breadcrumb-item::before {
   font-size: 1.3rem;
 }
+
+body {
+  font-family: "Poppins, Verdana, Geneva, Tahoma, sans-serif";
+  background-color:dimgray;
+  color: white;
+}
+
+.card {
+  background-color:slategrey
+}
