@@ -13,9 +13,8 @@ The "search" page allows the user to enter a mobile number to pull up any existi
 The "new table" page allows for the creation of new tables to accommodate different party sizes.
 
 ## Screenshots
-![Image of Dashboard](PUT A URL HERE)
-![Image of New Reservation](PUT A URL HERE)
-![Image of Search](PUT A URL HERE)
+![Image of Dashboard](https://i.ibb.co/Z1vzk5t/dash.png)
+![Image of New Reservation](https://i.ibb.co/n82jhzc/create.png)
 
 ## Tech Stack:
 
