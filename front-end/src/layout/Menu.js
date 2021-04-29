@@ -1,5 +1,5 @@
 import React from "react";
-import { today } from "../utils/date-time"
+import { today } from "../utils/date-time";
 import { Link } from "react-router-dom";
 
 /**

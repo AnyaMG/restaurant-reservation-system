@@ -18,16 +18,12 @@ async function read(reservationId) {
     .first();
 }
 
-// added this thing
-
 async function update(reservation_id, status) {
   return knex("reservations")
-    .update({"status": status})
-    .where({"reservation_id": reservation_id})
+    .update({ status: status })
+    .where({ reservation_id: reservation_id })
     .returning("*");
 }
-
-
 
 async function search(mobile_number) {
   return knex("reservations")
@@ -42,7 +38,7 @@ async function search(mobile_number) {
 async function edit(editedReservation, reservation_id) {
   return knex("reservations")
     .update(editedReservation)
-    .where({"reservation_id": reservation_id})
+    .where({ reservation_id: reservation_id })
     .returning("*");
 }
 
@@ -52,5 +48,5 @@ module.exports = {
   read,
   update,
   search,
-  edit
+  edit,
 };

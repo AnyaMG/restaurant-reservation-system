@@ -77,11 +77,11 @@ function NewTable() {
           ></input>
         </div>
         {/* Cancel and Submit buttons with appropriate routing */}
-        <button onClick={goBack} className="btn btn-outline-danger">
+        <button onClick={goBack} className="btn btn-danger">
           Cancel
         </button>
         {``} {``} {``} {``}{" "}
-        <button type="submit" className="btn btn-outline-success">
+        <button type="submit" className="btn btn-success">
           Submit
         </button>
         {``} {``} {``} {``}

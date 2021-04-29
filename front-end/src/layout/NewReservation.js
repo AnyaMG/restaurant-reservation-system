@@ -182,7 +182,7 @@ function NewReservation() {
         </div>
         {/* Cancel and Submit buttons with appropriate routing */}
         {/* first cancel button syntax */}
-        <button type="button" onClick={goBack} className="btn btn-outline-danger">
+        <button type="button" onClick={goBack} className="btn btn-danger">
           Cancel
         </button>
         {/* below is experimental dialog prompt to confirm cancel */}
@@ -243,7 +243,7 @@ function NewReservation() {
           </div>
         </div> */}
         {``} {``} {``} {``}
-        <button type="submit" className="btn btn-outline-success">
+        <button type="submit" className="btn btn-success">
           Submit
         </button>
         {``} {``} {``} {``}

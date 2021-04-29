@@ -43,7 +43,6 @@ function ReservationSeat() {
     const data = {
       reservation_id: reservation.reservation_id,
       table_id: parseInt(selectedTable),
-
     };
     await assignReservationToTable(data);
 

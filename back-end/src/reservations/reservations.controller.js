@@ -15,11 +15,12 @@ async function list(req, res) {
       .search(mobile_number)
       .then((data) => res.status(200).json({ data: data }));
   } else {
-    reservationsService.list(date)
-      .then((data) => {
-        const filteredData = data.filter(r => r.status !== "finished" && r.status !== "cancelled");
-        res.json({ data: filteredData })
-      });
+    reservationsService.list(date).then((data) => {
+      const filteredData = data.filter(
+        (r) => r.status !== "finished" && r.status !== "cancelled"
+      );
+      res.json({ data: filteredData });
+    });
   }
 }
 
@@ -182,8 +183,6 @@ async function validateReservation(req, res, next) {
     });
   }
 
-  // added this thing
-
   if (req.body.data.status === "seated") {
     return next({
       status: 400,
@@ -207,7 +206,7 @@ async function edit(req, res, next) {
     mobile_number,
     reservation_date,
     reservation_time,
-    people
+    people,
   } = req.body.data;
 
   const reservation = {
@@ -216,8 +215,8 @@ async function edit(req, res, next) {
     mobile_number,
     reservation_date,
     reservation_time,
-    people
-  }
+    people,
+  };
 
   reservationsService
     .edit(reservation, parseInt(reservation_id))
@@ -246,7 +245,7 @@ module.exports = {
   edit: [
     asyncErrorBoundary(validateReservation),
     asyncErrorBoundary(reservationExists),
-    asyncErrorBoundary(edit)
+    asyncErrorBoundary(edit),
   ],
   update: [
     asyncErrorBoundary(validateReservationStatus),

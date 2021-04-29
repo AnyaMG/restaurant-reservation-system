@@ -9,7 +9,6 @@ import ReservationSeat from "./ReservationSeat";
 import Search from "../layout/Search";
 import EditReservation from "../layout/EditReservation";
 
-
 /**
  * Defines all the routes for the application.
  *
@@ -57,7 +56,6 @@ function Routes() {
           <EditReservation />
         </Route>
 
-     
         <Route>
           <NotFound />
         </Route>

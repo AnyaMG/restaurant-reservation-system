@@ -45,7 +45,7 @@ function Search() {
             onChange={handleNumberInput}
             value={mobileNumber}
           />
-          <button type="submit" className="btn btn-outline-primary">
+          <button type="submit" className="btn btn-success">
             Find
           </button>
         </div>
