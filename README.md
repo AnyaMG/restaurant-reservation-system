@@ -2,7 +2,7 @@
 
 ## Live demo:
 
-[Restaurant Reservation System](https://reservations-hdyactvx3-anyamg.vercel.app/)  
+[Restaurant Reservation System](https://reservations-anyamg.vercel.app/)  
 
 ## Application Summary:
 
