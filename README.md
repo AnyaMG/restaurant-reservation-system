@@ -45,16 +45,15 @@ This application was created using JavaScript, React, Node, Express, Knex, Postg
 ## Installation:
 
 To install required dependencies:
-```
-npm install
-```
+
+`npm install`
 
 To launch server and site preview in development mode:
-```
+
 npm start start:dev
-```
+
 To connect to a PostgreSql database:
-```
+
 cp ./back-end/.env.sample ./back-end/.env.
 ```
 
