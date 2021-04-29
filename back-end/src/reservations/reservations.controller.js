@@ -123,6 +123,13 @@ async function validateReservation(req, res, next) {
     });
   }
 
+  if (new Date(req.body.data.reservation_date) < new Date()) {
+    return next({
+      status: 400,
+      message: "Date must be in the future"
+    });
+  }
+
   // validate reservation time
   if (
     !req.body.data.reservation_time ||
@@ -241,7 +248,10 @@ async function reservationExists(req, res, next) {
 module.exports = {
   list: [asyncErrorBoundary(list)],
   create: [asyncErrorBoundary(validateReservation), asyncErrorBoundary(create)],
-  read: [asyncErrorBoundary(read)],
+  read: [
+    asyncErrorBoundary(reservationExists),
+    asyncErrorBoundary(read)
+  ],
   edit: [
     asyncErrorBoundary(validateReservation),
     asyncErrorBoundary(reservationExists),

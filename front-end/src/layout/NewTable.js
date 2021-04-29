@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createTable } from "../utils/api";
+import { today } from '../utils/date-time';
 import { Link, useHistory } from "react-router-dom";
 
 // create New Table component
@@ -19,7 +20,7 @@ function NewTable() {
 
     await createTable(tableObj);
 
-    history.push(`/dashboard`);
+    history.push(`/dashboard?date=${today()}`);
   };
 
   const handleTableName = (e) => {

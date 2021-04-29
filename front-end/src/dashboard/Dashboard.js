@@ -78,7 +78,7 @@ function Dashboard({ date }) { // don't pass date, try creating state for date
       <ErrorAlert error={reservationsError} />
 
       <div className="container">
-        <div className="row" style={{"justify-content": "center"}}>
+        <div className="row" style={{justifyContent: "center"}}>
           <div className="col-3 text-center">
             <h2>Dashboard &nbsp;</h2>
           </div>
@@ -113,7 +113,7 @@ function Dashboard({ date }) { // don't pass date, try creating state for date
 
       <div className="container">
         <div className="row">
-          <div className="col" style={{display: "flex", "flex-direction": "column", "align-items": "center"}}>
+          <div className="col" style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <h5>Reservations</h5>
             {reservations.map((reservation) => {
               return (
@@ -125,7 +125,7 @@ function Dashboard({ date }) { // don't pass date, try creating state for date
               );
             })}
           </div>
-          <div className="col" style={{display: "flex", "flex-direction": "column", "align-items": "center"}}>
+          <div className="col" style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <h5>Tables</h5>
             {tables.map((table) => {
               return <TableCard key={table.table_id} table={table} loadDashboard={loadDashboard} />;
