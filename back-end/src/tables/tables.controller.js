@@ -133,7 +133,6 @@ async function validateCreateTable(req, res, next) {
 
 async function validateUpdateTable(req, res, next) {
   const { table, reservation } = res.locals;
-  // console.log(table);
 
   if (table.occupied) {
     next({

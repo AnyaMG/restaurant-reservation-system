@@ -4,7 +4,6 @@ import {
   listTables,
   readReservation,
   assignReservationToTable,
-  assignReservationStatus
 } from "../utils/api";
 
 function ReservationSeat() {
@@ -13,7 +12,6 @@ function ReservationSeat() {
   const [reservation, setReservation] = useState({});
   const [tables, setTables] = useState([]);
   const [selectedTable, setSelectedTable] = useState("");
-  // const [occupiedStatus, setOccupiedStatus] = useState(false); // add this to change status to occupied 
 
   useEffect(() => {
     const loadTables = async () => {
@@ -28,22 +26,11 @@ function ReservationSeat() {
     };
     loadTables();
     loadReservation();
-  }, []);
+  }, [params.reservation_id]);
 
   const tableSelect = (e) => {
     setSelectedTable(e.target.value);
   };
-
-  //added this thing
-  // const statusModify = async (e) => {
-  //  if (
-  //      occupiedStatus === false
-  //  ) {
-  //      setOccupiedStatus(true)
-  //  } else {
-  //      setOccupiedStatus(false)
-  //  }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,7 +43,7 @@ function ReservationSeat() {
     const data = {
       reservation_id: reservation.reservation_id,
       table_id: parseInt(selectedTable),
-    //   table_occupied: occupiedStatus.statusModify, //added this
+
     };
     await assignReservationToTable(data);
 

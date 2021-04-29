@@ -175,14 +175,14 @@ function NewReservation() {
             className="form-control"
             id="exampleFormControlTextarea1"
             rows="3"
-            placeholder="# (default to 1 if left blank)"
+            placeholder="Enter party size (min 1)"
             onChange={handlePeople}
             required
           ></input>
         </div>
         {/* Cancel and Submit buttons with appropriate routing */}
         {/* first cancel button syntax */}
-        <button onClick={goBack} className="btn btn-outline-danger">
+        <button type="button" onClick={goBack} className="btn btn-outline-danger">
           Cancel
         </button>
         {/* below is experimental dialog prompt to confirm cancel */}

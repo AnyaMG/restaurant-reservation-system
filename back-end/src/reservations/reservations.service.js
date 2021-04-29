@@ -4,7 +4,6 @@ async function list(date) {
   return knex("reservations")
     .select("*")
     .where({ reservation_date: date })
-    .whereNot({ status: "finished" })
     .orderBy("reservation_time", "asc");
 }
 
@@ -40,10 +39,18 @@ async function search(mobile_number) {
     .orderBy("reservation_date");
 }
 
+async function edit(editedReservation, reservation_id) {
+  return knex("reservations")
+    .update(editedReservation)
+    .where({"reservation_id": reservation_id})
+    .returning("*");
+}
+
 module.exports = {
   list,
   create,
   read,
   update,
   search,
+  edit
 };

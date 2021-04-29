@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation, Link } from "react-router-dom";
 import { listReservations, listTables } from "../utils/api";
+import { today, previous, next } from "../utils/date-time";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationCard from "../components/ReservationCard";
 import TableCard from "../components/TableCard";
+
+import { format } from 'date-fns';
 
 /**
  * Defines the dashboard page.
@@ -16,6 +19,8 @@ function Dashboard({ date }) { // don't pass date, try creating state for date
   const [reservationsError, setReservationsError] = useState(null);
   const [tables, setTables] = useState([]);
   const [tablesError, setTablesError] = useState(null);
+  let location = useLocation();
+  let urlDate = new URLSearchParams(location.search).get("date");
 
   const history = useHistory();
 
@@ -25,16 +30,7 @@ function Dashboard({ date }) { // don't pass date, try creating state for date
     date = query;
   }
 
-  useEffect(loadDashboard, [date]);
-
-  //   //function previousDay(){
-  //   };
-  //   //function currentDay([date]){
-  // };
-  //   //function nextDay(){
-  //   };
-
-  function loadDashboard() { // consider reloading on seat or on table change rather than just date
+  useEffect(() => {
     const abortController = new AbortController();
     setReservationsError(null);
     listReservations({ date }, abortController.signal)
@@ -43,6 +39,20 @@ function Dashboard({ date }) { // don't pass date, try creating state for date
     listTables(abortController.signal)
       .then(setTables)
       .catch(tablesError, setTablesError);
+  }, [date, tablesError]);
+
+
+
+  const loadDashboard = () => { 
+    const abortController = new AbortController();
+    setReservationsError(null);
+    listReservations({ date }, abortController.signal)
+      .then(setReservations)
+      .catch(setReservationsError);
+    listTables(abortController.signal)
+      .then(setTables)
+      .catch(tablesError, setTablesError);
+
     return () => abortController.abort();
   }
 
@@ -55,7 +65,7 @@ function Dashboard({ date }) { // don't pass date, try creating state for date
           </li>
           <li class-name="breadcrumb-item"></li>
           <li className="breadcrumb-item active" aria-current="page">
-            <h3>{date}</h3>
+            <h3>{format(new Date(date), "MMMM dd, yyyy")}</h3>
           </li>
         </ol>
       </nav>
@@ -69,19 +79,23 @@ function Dashboard({ date }) { // don't pass date, try creating state for date
         <div className="row">
           <div className="col">
             <div
-              class="btn-group"
+              className="btn-group"
               role="group"
               aria-label="Basic mixed styles example"
             >
-              <a href="#" type="button" role="button" class="btn btn-outline-info">
+
+              <Link to={`/dashboard?date=${previous(urlDate)}`} type="button" role="button" className="btn btn-outline-info">
                 Previous
-              </a>
-              <a href={`/reservations/`} type="button" role="button" class="btn btn-info">
+              </Link>
+
+              <Link to={`/dashboard?date=${today()}`} type="button" role="button" className="btn btn-info">
                 Today
-              </a>
-              <a href="#" type="button" role="button" class="btn btn-outline-info">
+              </Link>
+
+              <Link to={`/dashboard?date=${next(urlDate)}`} type="button" role="button" className="btn btn-outline-info">
                 Next
-              </a>
+              </Link>
+
             </div>
           </div>
         </div>
@@ -96,6 +110,7 @@ function Dashboard({ date }) { // don't pass date, try creating state for date
                 <ReservationCard
                   key={reservation.reservation_id}
                   reservation={reservation}
+                  loadDashboard={loadDashboard}
                 />
               );
             })}

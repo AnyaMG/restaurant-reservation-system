@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { mobileSearch } from "../utils/api";
-
 import ReservationCard from "../components/ReservationCard";
 
-
 function Search() {
-  const history = useHistory();
-  const [mobileNumber, setMobileNumber] = useState('');
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [hasSearched, setHasSearched] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSubmit = async (e) => {
@@ -15,11 +13,12 @@ function Search() {
 
     const search = await mobileSearch(mobileNumber);
     setSearchResults(search);
-  }
+    setHasSearched(true);
+  };
 
   const handleNumberInput = (e) => {
     setMobileNumber(e.target.value);
-  }
+  };
 
   return (
     <div>
@@ -52,14 +51,18 @@ function Search() {
         </div>
         {/* Cancel and Submit buttons with appropriate routing */}
       </form>
-      {searchResults.length > 0 ? searchResults.map((reservation) => {
-        return (
-          <ReservationCard
-            key={reservation.reservation_id}
-            reservation={reservation}
-          />
-        );
-      }) : <h7>No reservations found</h7>}
+      {searchResults.length > 0 ? (
+        searchResults.map((reservation) => {
+          return (
+            <ReservationCard
+              key={reservation.reservation_id}
+              reservation={reservation}
+            />
+          );
+        })
+      ) : hasSearched ? (
+        <h5>No reservations found</h5>
+      ) : null}
     </div>
   );
 }

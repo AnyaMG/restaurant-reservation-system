@@ -1,14 +1,11 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import { deleteTable, assignReservationStatus } from "../utils/api";
+import { deleteTable} from "../utils/api";
 
 const TableCard = ({ table, loadDashboard }) => {
-  const history = useHistory();
-  // const [remainingTables, setRemainingTables] = useState("");
 
   const finishTable = async (e) => {
     e.preventDefault();
-    if (
+    if ( 
       window.confirm(
         "Is this table ready to seat new guests? \n\n This cannot be undone."
       )
